@@ -49,6 +49,7 @@ async function run() {
       res.json(guitars);
       console.log(guitars);
     });
+    // Single Guitar delete api
     app.delete("/guitars/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -72,6 +73,14 @@ async function run() {
       console.log(result);
       res.json(result);
     });
+    // app.delete("/orders/:id", async (req, res) => {
+    //   const id = req.params.id;
+    //   console.log(id);
+    //   const query = { _id: ObjectId(id) };
+    //   const result = await ordersCollection.deleteOne(query);
+    //   console.log(result);
+    //   res.json("Deleted");
+    // });
 
     // USER POST API
     app.post("/users", async (req, res) => {
@@ -131,6 +140,8 @@ async function run() {
       console.log(result);
       res.json(result)
     })
+    // REVIEW DELETE API 
+     
 
 
 
