@@ -24,8 +24,16 @@ async function run() {
     const guitarCollection = database.collection("guitars");
     const ordersCollection = database.collection("orders");
     const usersCollection = database.collection("users");
+    const reviewCollection = database.collection("reviews")
     console.log("database connected successfully");
 
+
+    // ADD GUITAR POST API
+    app.post("/guitars", async (req, res) => {
+      const guitars = req.body;
+      const result = await guitarCollection.insertOne(guitars);
+      res.json(result);
+    });
     // GUITARS GET API
     app.get("/guitars", async (req, res) => {
       const cursor = guitarCollection.find({});
@@ -61,15 +69,6 @@ async function run() {
     app.post("/orders", async (req, res) => {
       const orders = req.body;
       const result = await ordersCollection.insertOne(orders);
-      console.log(result);
-      res.json(result);
-    });
-
-    // ADD GUITAR POST API
-    app.post("/guitars", async (req, res) => {
-      const guitars = req.body;
-      console.log("hit the post api", guitars);
-      const result = await guitarCollection.insertOne(guitars);
       console.log(result);
       res.json(result);
     });
@@ -115,6 +114,26 @@ async function run() {
       const result = await usersCollection.updateOne(filter, updateDoc);
       res.json(result);
     });
+    // Review Area 
+
+    // Review GET API
+    app.get("/reviews", async(req,res)=>{
+      const cursor = reviewCollection.find({});
+      const review = await cursor.toArray();
+      res.json(review)
+    })
+
+  //  REVIEW POST API 
+    app.post("/reviews", async(req,res)=>{
+      const review = req.body
+      console.log(review);
+      const result = await reviewCollection.insertOne(review)
+      console.log(result);
+      res.json(result)
+    })
+
+
+
   } finally {
     // await client.close();
   }
